@@ -63,3 +63,6 @@ Play YouTube Videos on Facebook without leaving the site.
 </table>
 
 Ref: https://github.com/OpenUserJs/OpenUserJS.org/wiki/Userscript-beginners-HOWTO#how-do-i-get-going
+
+
+Visit this link after you have installed the browser plugin to load the userscript: https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play%20YouTube%20on%20Facebook.user.js
