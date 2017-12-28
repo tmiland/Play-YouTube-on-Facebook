@@ -23,7 +23,6 @@
 // ==UserScript==
 // @name        Play YouTube on Facebook
 // @description Play YouTube Videos on Facebook without leaving the site.
-// @license     MIT License
 // @namespace   https://github.com/tmiland/Play-YouTube-on-Facebook
 // @updateURL   https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @downloadURL https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
