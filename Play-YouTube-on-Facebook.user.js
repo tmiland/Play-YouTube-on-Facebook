@@ -5,7 +5,7 @@
 // @updateURL   https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @downloadURL https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @supportURL  https://github.com/tmiland/Play-YouTube-on-Facebook/issues
-// @version     1.5
+// @version     1.4
 // @date        28-12-2017
 // @author      tmiland
 // @match       https://www.facebook.com/*
@@ -19,16 +19,18 @@
 // 1.2 Changed @namespace address
 // 1.3 Updated Regex to match more YouTube URLs - 28.12.2017
 // 1.4 Added update and download URL
-// 1.5 Changed how to Get YouTube ID from various YouTube URL
 // ==/UserScript==
+
 	$(document).ready(function () {
 		$(document).on("click", 'a', function (event) {
 			var href = $(this).attr('href');
-			href = YouTubeGetID(href);
+			href = getId(href);
 			if (href == 'error') {
 				return;
 			}
+
 			event.preventDefault();
+
 			// pause all currently playing YouTube frames
 			$('.youtube_frame').each(function(){
 				this.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
@@ -38,11 +40,14 @@
 			//$(this).replaceWith('<iframe class="youtube_frame"  src="//www.youtube.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>');
 			$(this).replaceWith('<iframe type="text/html" width="474" height="360" class="youtube_frame" src="https://www.youtube-nocookie.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>');
 		});
-		// Get YouTube ID from various YouTube URL
-		// https://gist.github.com/takien/4077195
-		// @author: takien
-		function YouTubeGetID(url){
-			url = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-			return undefined !== url[2]?url[2].split(/[^0-9a-z_\-]/i)[0]:url[0];
+		function getId(url) {
+			var regExp = /(?:[?&]vi?=|\/embed\/|\/\d\d?\/|\/vi?\/|https?:\/\/(?:www\.)?youtu\.be\/)([^&\n?#]+)/;
+			var match = url.match(regExp);
+
+			if (match && match[1].length == 11) {
+				return match[1];
+			} else {
+				return 'error';
+			}
 		}
 	});
