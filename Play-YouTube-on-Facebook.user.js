@@ -5,7 +5,7 @@
 // @updateURL   https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @downloadURL https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @supportURL  https://github.com/tmiland/Play-YouTube-on-Facebook/issues
-// @version     1.6
+// @version     1.7
 // @date        28-12-2017
 // @author      tmiland
 // @match       https://www.facebook.com/*
@@ -22,6 +22,7 @@
 | 1.4 Added update and download URL                                               |
 | 1.5 Adjusted width, simplified the regExp and added support for new share links.|
 | 1.6 Updated regExp to match url with "-ISM" in the ID.                          |
+| 1.7 Fixed a error in the regExp.
  ---------------------------------------------------------------------------------
 **/
 	$(document).ready(function () {
@@ -46,7 +47,7 @@
 		function getId(url) {
 			if(url){
 				//var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-				var regExp = /^.*(youtu.be\/|v[=]|v\/|v%3D-)([-a-zA-Z0-9]+)&?/;
+				var regExp = /^.*(youtu.be\/|v[=]|v\/|v%3D)([-a-zA-Z0-9]+)&?/;
 				var match = url.match(regExp);
 				if (match && match.length > 2 && match[2].length == 11) {
 					return match[2];
