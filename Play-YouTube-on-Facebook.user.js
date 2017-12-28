@@ -8,7 +8,6 @@
 // @version     1.5
 // @date        28-12-2017
 // @author      tmiland
-// @license     MIT License
 // @match       https://www.facebook.com/*
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @grant       none
