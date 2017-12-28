@@ -5,7 +5,7 @@
 // @updateURL   https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @downloadURL https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @supportURL  https://github.com/tmiland/Play-YouTube-on-Facebook/issues
-// @version     1.7
+// @version     1.8
 // @date        28-12-2017
 // @author      tmiland
 // @match       https://www.facebook.com/*
@@ -22,7 +22,8 @@
 | 1.4 Added update and download URL                                               |
 | 1.5 Adjusted width, simplified the regExp and added support for new share links.|
 | 1.6 Updated regExp to match url with "-ISM" in the ID.                          |
-| 1.7 Fixed a error in the regExp.
+| 1.7 Fixed a error in the regExp.                                                |
+| 1.8 Added a regExp to cover ALL URLs, adjusted width.                           |
  ---------------------------------------------------------------------------------
 **/
 	$(document).ready(function () {
@@ -42,15 +43,16 @@
 		);
 			// Old code for reference
 			//$(this).replaceWith('<iframe class="youtube_frame"  src="//www.youtube.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>');
-			$(this).replaceWith('<iframe type="text/html" width="460" height="360" class="youtube_frame" src="https://www.youtube-nocookie.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>');
+			$(this).replaceWith('<iframe type="text/html" width="476" height="360" class="youtube_frame" src="https://www.youtube-nocookie.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>');
 		});
 		function getId(url) {
 			if(url){
-				//var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-				var regExp = /^.*(youtu.be\/|v[=]|v\/|v%3D)([-a-zA-Z0-9]+)&?/;
+				//var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/; // This is not all good.
+				//var regExp = /^.*(youtu.be\/|v[=]|v\/|v%3D)([-a-zA-Z0-9]+)&?/; // Does not match all links.
+				var regExp = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|v%3D|%2F|\/)([\w\-_]+)\&?/; // This is the shit! Matches ALL URLs (I hope ;p)
 				var match = url.match(regExp);
-				if (match && match.length > 2 && match[2].length == 11) {
-					return match[2];
+				if (match && match.length > 1 && match[1].length == 11) {
+					return match[1];
 				} else {
 					return 'error';
 				}
