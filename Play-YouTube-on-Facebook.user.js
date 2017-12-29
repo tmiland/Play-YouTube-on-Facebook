@@ -5,7 +5,7 @@
 // @updateURL   https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @downloadURL https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @supportURL  https://github.com/tmiland/Play-YouTube-on-Facebook/issues
-// @version     1.8
+// @version     1.9
 // @date        28-12-2017
 // @author      tmiland
 // @match       https://www.facebook.com/*
@@ -13,50 +13,46 @@
 // @grant       none
 // @license MIT
 // ==/UserScript==
-/**
- ---------------------------------Change-log--------------------------------------
-| 1.0 Added privacy option                                                        |
-| 1.1 Added width and height                                                      |
-| 1.2 Changed @namespace address                                                  |
-| 1.3 Updated Regex to match more YouTube URLs - 28.12.2017                       |
-| 1.4 Added update and download URL                                               |
-| 1.5 Adjusted width, simplified the regExp and added support for new share links.|
-| 1.6 Updated regExp to match url with "-ISM" in the ID.                          |
-| 1.7 Fixed a error in the regExp.                                                |
-| 1.8 Added a regExp to cover ALL URLs, adjusted width.                           |
- ---------------------------------------------------------------------------------
-**/
-	$(document).ready(function () {
-		$(document).on("click", 'a', function (event) {
-			var href = $(this).attr('href');
-			href = getId(href);
-			if (href == 'error') {
-				return;
-			}
+/*----------------------------------Change-log-------------------------------------*\
+| 1.0 Added privacy option                                                          |
+| 1.1 Added width and height                                                        |
+| 1.2 Changed @namespace address                                                    |
+| 1.3 Updated Regex to match more YouTube URLs - 28.12.2017                         |
+| 1.4 Added update and download URL                                                 |
+| 1.5 Adjusted width, simplified the regExp and added support for new share links.  |
+| 1.6 Updated regExp to match url with "-ISM" in the ID.                            |
+| 1.7 Fixed a error in the regExp.                                                  |
+| 1.8 Added a regExp to cover ALL URLs, adjusted width.                             |
+| 1.9 Beautified the code. Removed references.                                      |
+\*---------------------------------------------------------------------------------*/
+$(document).ready(function () {
+  $(document).on("click", 'a', function (event) {
+    var href = $(this).attr('href');
+    href = getId(href);
+    if (href == 'error') {
+      return;
+    }
 
-			event.preventDefault();
+    event.preventDefault();
 
-			// pause all currently playing YouTube frames
-			$('.youtube_frame').each(function(){
-				this.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-			}
-		);
-			// Old code for reference
-			//$(this).replaceWith('<iframe class="youtube_frame"  src="//www.youtube.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" allowfullscreen></iframe>');
-			$(this).replaceWith('<iframe type="text/html" width="476" height="360" class="youtube_frame" src="https://www.youtube-nocookie.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>');
-		});
-		function getId(url) {
-			if(url){
-				//var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/; // This is not all good.
-				//var regExp = /^.*(youtu.be\/|v[=]|v\/|v%3D)([-a-zA-Z0-9]+)&?/; // Does not match all links.
-				var regExp = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|v%3D|%2F|\/)([\w\-_]+)\&?/; // This is the shit! Matches ALL URLs (I hope ;p)
-				var match = url.match(regExp);
-				if (match && match.length > 1 && match[1].length == 11) {
-					return match[1];
-				} else {
-					return 'error';
-				}
-			}
-				return 'error';
-		}
-	});
+    // pause all currently playing YouTube frames
+    $('.youtube_frame').each(function () {
+      this.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    });
+    $(this).replaceWith('<iframe type="text/html" width="476" height="360" class="youtube_frame" src="https://www.youtube-nocookie.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>');
+  });
+
+  function getId(url) {
+    if (url) {
+      var regExp = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|v%3D|%2F|\/)([\w\-_]+)\&?/;
+      var match = url.match(regExp);
+      if (match && match.length > 1 && match[1].length == 11) {
+        return match[1];
+      }
+      else {
+        return 'error';
+      }
+    }
+    return 'error';
+  }
+});
