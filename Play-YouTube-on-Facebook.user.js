@@ -5,8 +5,8 @@
 // @updateURL   https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @downloadURL https://github.com/tmiland/Play-YouTube-on-Facebook/raw/master/Play-YouTube-on-Facebook.user.js
 // @supportURL  https://github.com/tmiland/Play-YouTube-on-Facebook/issues
-// @version     1.9
-// @date        28-12-2017
+// @version     2.0
+// @date        29-01-2018
 // @author      tmiland
 // @match       https://www.facebook.com/*
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
@@ -24,6 +24,7 @@
 | 1.7 Fixed a error in the regExp.                                                  |
 | 1.8 Added a regExp to cover ALL URLs, adjusted width.                             |
 | 1.9 Beautified the code. Removed references.                                      |
+| 2.0 Changed URL due to browser error.                                             |
 \*---------------------------------------------------------------------------------*/
 $(document).ready(function () {
   $(document).on("click", 'a', function (event) {
@@ -39,7 +40,7 @@ $(document).ready(function () {
     $('.youtube_frame').each(function () {
       this.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
     });
-    $(this).replaceWith('<iframe type="text/html" width="476" height="360" class="youtube_frame" src="https://www.youtube-nocookie.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>');
+    $(this).replaceWith('<iframe type="text/html" width="476" height="360" class="youtube_frame" src="https://www.youtube.com/embed/' + href + '?autoplay=1&enablejsapi=1" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>');
   });
 
   function getId(url) {
